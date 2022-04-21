@@ -421,39 +421,3 @@ public class MainService implements IMainService {
     }
 
 }
-
-
-
-
-//    public Client createClient(Client c) {
-//
-//        clients.add(c);
-//        return c;
-//    }
-//
-//    public SectionedLocation addSectionedLocation(String name, String city, String address, int capacity,
-//                                                  int categories, HashMap<Integer, Integer> cc) {
-//        SectionedLocation l = new SectionedLocation(name, city, address, capacity, categories, cc);
-//
-//        l.setCapacityForCategory(3, 1);
-//        l.setCapacityForCategory(2, 1);
-//        l.setCapacityForCategory(1, 1);
-//
-//        venues.add(l);
-//        return l;
-//    }
-//
-//    public Event createEvent(String t, Date d, Location l, int age, Time gate, Time start,
-//                             HashMap<String, Integer> discounts) {
-//        Event e = new Event(t, d, l, age, gate, start, discounts);
-//        events.add(e);
-//        return e;
-//    }
-//
-//    public Festival createFestival(String t, Date d, Location l, int age, Time gate, Time start,
-//                                   Date e, HashMap<String, Integer> discounts) {
-//        Festival f = new Festival(t, d, l, age, gate, start, e, discounts);
-//        events.add(f);
-//        return f;
-//    }
-
