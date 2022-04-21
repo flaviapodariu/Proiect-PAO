@@ -1,7 +1,7 @@
-package Event;
+package Entities.Event;
 
-import Date.*;
-import Location.Location;
+import Entities.Date.*;
+import Entities.Location.*;
 
 import java.util.HashMap;
 import java.util.Scanner;

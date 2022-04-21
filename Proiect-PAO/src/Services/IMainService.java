@@ -1,13 +1,7 @@
 package Services;
-
-import Client.Client;
-import Date.Date;
-import Event.*;
-import Location.*;
-import Date.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import Entities.Location.*;
+import Entities.Event.*;
+import Entities.Client.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,6 +27,9 @@ public interface IMainService {
     double sellAdultFullPassForCategory(Scanner in);
 
     void listClientTickets(Scanner in);
+
+
+
 //
 //    double sellLimitedPass(Event event, Client client, int category,
 //                           int hours, Time start, int amount, int price);

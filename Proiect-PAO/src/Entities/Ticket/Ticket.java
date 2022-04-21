@@ -1,5 +1,5 @@
-package Ticket;
-import Event.Event;
+package Entities.Ticket;
+import Entities.Event.*;
 
 import java.util.Scanner;
 

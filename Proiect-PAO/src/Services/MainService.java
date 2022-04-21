@@ -1,13 +1,10 @@
 package Services;
-
-import Client.Client;
 import Comparators.CapacityComparator;
-import Date.*;
-import Date.Date;
-import Event.*;
-import Location.*;
-import Ticket.*;
-
+import Entities.Date.Date;
+import Entities.Location.*;
+import Entities.Event.*;
+import Entities.Client.*;
+import Entities.Ticket.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -21,9 +18,9 @@ public class MainService implements IMainService {
     private static MainService instance = null;
 
     private MainService() {
-        this.clients =  new ArrayList<Client>();
-        this.locations = new ArrayList<Location>();
-        this.events = new ArrayList<Event>();
+        this.clients =  new ArrayList<>();
+        this.locations = new ArrayList<>();
+        this.events = new ArrayList<>();
     }
 
     public static MainService getInstance() {
@@ -49,6 +46,10 @@ public class MainService implements IMainService {
 
     public List<Location> getLocations() {
         return locations;
+    }
+
+    public HashMap<Client, List<Ticket>> getTicketRegistry() {
+        return ticketRegistry;
     }
 
     public void listLocations() {
@@ -86,33 +87,13 @@ public class MainService implements IMainService {
         this.events = events;
     }
 
-    public HashMap<Client, List<Ticket>> getTicketRegistry() {
-        return ticketRegistry;
-    }
-
-    @Override
-    public void listClientTickets(Scanner in){
-
-        System.out.println("Client ID: ");
-        Client client = this.getClientByID(in.nextInt());
-        if(this.ticketRegistry.containsKey(client)){
-            List<Ticket> tickets = this.ticketRegistry.get(client);
-            System.out.println("The client's tickets are:\n ");
-            for(Ticket t: tickets){
-                System.out.println(t);
-            }
-        }
-        else System.out.println("This client doesn't have any tickets!");
-
-    }
-
 
     private void mapTicketToClient(Ticket ticket, Client client){
         List<Ticket> tickets;
         if(this.ticketRegistry.containsKey(client))
             tickets = this.ticketRegistry.get(client);
 
-        else tickets = new ArrayList<Ticket>();
+        else tickets = new ArrayList<>();
 
         tickets.add(ticket);
         this.ticketRegistry.put(client, tickets);
@@ -162,9 +143,6 @@ public class MainService implements IMainService {
         return new Festival(in, l);
     }
 
-
-    // USUAL ACTIONS
-
     @Override
     public double sellAdultDayPassForCategory(Scanner in) {
         Event event = this.eventExistsHelper(in);
@@ -179,17 +157,17 @@ public class MainService implements IMainService {
         }
 
         SectionedLocation venue = (SectionedLocation)event.getVenue();
-            System.out.println("Enter the wanted category:");
-            int category = Integer.parseInt(in.nextLine());
-            if(venue.isAvailable(category, 1)){
-                Ticket pass = new DayPass(in, category, event, false);
-                client.addTicket(pass);
-                this.mapTicketToClient(pass, client);
-                return pass.getFullPrice();
-            }
+        System.out.println("Enter the wanted category:");
+        int category = Integer.parseInt(in.nextLine());
+        if(venue.isAvailable(category, 1)){
+            Ticket pass = new DayPass(in, category, event, false);
+            client.addTicket(pass);
+            this.mapTicketToClient(pass, client);
+            return pass.getFullPrice();
+        }
         return 0;
 
-}
+    }
 
     @Override
     public double sellDiscountedDayPassForCategory(Scanner in){
@@ -246,25 +224,21 @@ public class MainService implements IMainService {
         }
         return 0;
     }
+    @Override
+    public void listClientTickets(Scanner in){
 
-//    public double sellLimitedPass(Event event, Client client, int category,
-//                                         int hours, Time start, int amount, int price){
-//        int minAge = event.getMinAge();
-//        if(!client.validateAge(event.getDate(), minAge))
-//            return 0;
-//
-//        SectionedLocation venue = (SectionedLocation)event.getVenue();
-//
-//        if(venue.isAvailable(category, amount)){
-//            for(int i = 0; i < amount; i++) {
-//                Ticket pass = new LimitedPass(event, price, category, hours, start); //category 0 = general access
-//                client.addTicket(pass);
-//            }
-//            return amount * price;
-//        }
-//
-//        return 0;
-//    }
+        System.out.println("Client ID: ");
+        Client client = this.getClientByID(in.nextInt());
+        if(this.ticketRegistry.containsKey(client)){
+            List<Ticket> tickets = this.ticketRegistry.get(client);
+            System.out.println("The client's tickets are:\n ");
+            for(Ticket t: tickets){
+                System.out.println(t);
+            }
+        }
+        else System.out.println("This client doesn't have any tickets!");
+
+    }
 
     // QUERIES
     @Override
@@ -295,7 +269,7 @@ public class MainService implements IMainService {
 
     @Override
     public List<Event> getAllEventsUntil(Scanner in) {
-        List<Event> eventList = new ArrayList<Event>();
+        List<Event> eventList = new ArrayList<>();
         System.out.println("Enter end date: ");
         Date end = Date.parser(in.nextLine());
 
@@ -324,7 +298,7 @@ public class MainService implements IMainService {
 
 // HELPERS
 
-    private boolean isFestival(Event e){
+    public boolean isFestival(Event e){
         boolean isFestival = true;
 
         try{
@@ -337,7 +311,7 @@ public class MainService implements IMainService {
         return isFestival;
     }
 
-    private boolean isSectioned(Location l){
+    public boolean isSectioned(Location l){
         boolean isSectioned = true;
         try{
             SectionedLocation sl = (SectionedLocation)l;
@@ -348,7 +322,7 @@ public class MainService implements IMainService {
         return isSectioned;
     }
 
-    private Location readLocationForEvent(){
+    public Location readLocationForEvent(){
         Scanner in = new Scanner(System.in);
         System.out.println("Is the event happening at an existing location?(y/n): ");
         String ans = in.nextLine();
@@ -376,7 +350,7 @@ public class MainService implements IMainService {
         return l;
     }
 
-    private Event eventExistsHelper(Scanner in){
+    public Event eventExistsHelper(Scanner in){
         System.out.println("Enter the event ID: ");
         int eventID = Integer.parseInt(in.nextLine());
         Event event = this.getEventByID(eventID);
@@ -387,7 +361,7 @@ public class MainService implements IMainService {
         return event;
     }
 
-    private Client clientExistsHelper(Scanner in)
+    public Client clientExistsHelper(Scanner in)
     {
         System.out.println("Enter the user's ID:");
         int userID = Integer.parseInt(in.nextLine());
@@ -399,7 +373,7 @@ public class MainService implements IMainService {
         return client;
     }
 
-    private Client getClientByID(int ID){
+    public Client getClientByID(int ID){
         for(Client c: this.clients){
             if(c.getID() == ID){
                 return c;
@@ -410,7 +384,7 @@ public class MainService implements IMainService {
         return error;
     }
 
-    private Event getEventByID(int ID) {
+    public Event getEventByID(int ID) {
         for (Event e : this.events) {
             if (e.getID() == ID)
                 return e;

@@ -1,9 +1,6 @@
-package Client;
-
-import Date.Date;
-import Ticket.*;
-
-import java.util.ArrayList;
+package Entities.Client;
+import Entities.Date.*;
+import Entities.Ticket.*;
 import java.util.List;
 import java.util.Scanner;
 

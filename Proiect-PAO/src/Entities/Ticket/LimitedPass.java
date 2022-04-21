@@ -1,7 +1,7 @@
-package Ticket;
+package Entities.Ticket;
 
-import Date.Time;
-import Event.Event;
+import Entities.Date.*;
+import Entities.Event.*;
 
 import javax.swing.text.html.StyleSheet;
 import java.util.Scanner;

@@ -1,8 +1,6 @@
-package Ticket;
-
-import Date.Date;
-import Event.Event;
-
+package Entities.Ticket;
+import Entities.Date.*;
+import Entities.Event.*;
 import java.util.Scanner;
 
 public class DayPass extends Ticket{

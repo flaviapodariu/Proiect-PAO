@@ -1,6 +1,4 @@
-package Location;
-
-import java.util.HashMap;
+package Entities.Location;
 import java.util.Scanner;
 
 public class Location implements Comparable<Location> {

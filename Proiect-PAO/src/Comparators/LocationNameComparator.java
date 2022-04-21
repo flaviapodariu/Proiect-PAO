@@ -1,6 +1,6 @@
 package Comparators;
 
-import Location.Location;
+import Entities.Location.*;
 
 import java.util.Comparator;
 

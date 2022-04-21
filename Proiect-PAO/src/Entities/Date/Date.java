@@ -1,6 +1,4 @@
-package Date;
-
-import java.util.Scanner;
+package Entities.Date;
 
 public class Date {
     private int day;

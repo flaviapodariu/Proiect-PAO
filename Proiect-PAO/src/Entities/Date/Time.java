@@ -1,4 +1,4 @@
-package Date;
+package Entities.Date;
 
 public class Time {
     private int hour;

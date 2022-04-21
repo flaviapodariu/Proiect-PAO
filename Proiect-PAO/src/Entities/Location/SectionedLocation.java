@@ -1,4 +1,4 @@
-package Location;
+package Entities.Location;
 
 import java.util.HashMap;
 import java.util.Scanner;

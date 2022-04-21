@@ -1,11 +1,8 @@
-package Ticket;
+package Entities.Ticket;
 
-import Date.Date;
-import Event.Event;
+import Entities.Event.*;
 
-import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 public class FullPass extends Ticket{
 
