@@ -17,6 +17,7 @@ public interface IMainService {
 
     Event createEvent(Scanner in);
     void listEvents();
+    void listTicketsSold();
 
     Festival createFestival(Scanner in);
 
@@ -27,12 +28,6 @@ public interface IMainService {
     double sellAdultFullPassForCategory(Scanner in);
 
     void listClientTickets(Scanner in);
-
-
-
-//
-//    double sellLimitedPass(Event event, Client client, int category,
-//                           int hours, Time start, int amount, int price);
 
     List<Event> getAllEventsStartingFrom(Scanner in);
     void listAllEventsStartingFrom(Scanner in);

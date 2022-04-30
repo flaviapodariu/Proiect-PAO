@@ -1,6 +1,8 @@
 package Entities.Client;
 import Entities.Date.*;
 import Entities.Ticket.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,6 +25,7 @@ public class Client {
         this.firstName = first;
         this.lastName = last;
         this.DOB = dob;
+        this.tickets = new ArrayList<>();
     }
     public Client(Scanner in){
         this.read(in);

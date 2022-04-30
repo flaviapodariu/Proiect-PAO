@@ -13,6 +13,7 @@ public class MainService implements IMainService {
     private List<Client> clients;
     private List<Location> locations;
     private List<Event> events;
+    private List<Ticket> ticketsSold;
     private HashMap<Client, List<Ticket>> ticketRegistry;
 
     private static MainService instance = null;
@@ -87,6 +88,13 @@ public class MainService implements IMainService {
         this.events = events;
     }
 
+    @Override
+    public void listTicketsSold(){
+        for(Ticket t: this.ticketsSold){
+            System.out.println(t + "\n");
+        }
+    }
+
 
     private void mapTicketToClient(Ticket ticket, Client client){
         List<Ticket> tickets;
@@ -99,6 +107,9 @@ public class MainService implements IMainService {
         this.ticketRegistry.put(client, tickets);
     }
 
+    public void setTicketsSold(List<Ticket> ticketsSold) {
+        this.ticketsSold = ticketsSold;
+    }
 
     // INTERFACE IMPLEMENTATION
     // CREATE/ADD
@@ -200,6 +211,7 @@ public class MainService implements IMainService {
         return 0;
 
     }
+
 
     @Override
     public double sellAdultFullPassForCategory(Scanner in){
@@ -394,7 +406,7 @@ public class MainService implements IMainService {
         return error;
     }
 
-    private Location getVenueByID(int ID){
+    public Location getVenueByID(int ID){
         for(Location l: this.locations) {
             if (l.getID() == ID)
                 return l;
@@ -421,3 +433,36 @@ public class MainService implements IMainService {
     }
 
 }
+
+//    public Client createClient(Client c) {
+//
+//        clients.add(c);
+//        return c;
+//    }
+//
+//    public SectionedLocation addSectionedLocation(String name, String city, String address, int capacity,
+//                                                  int categories, HashMap<Integer, Integer> cc) {
+//        SectionedLocation l = new SectionedLocation(name, city, address, capacity, categories, cc);
+//
+//        l.setCapacityForCategory(3, 1);
+//        l.setCapacityForCategory(2, 1);
+//        l.setCapacityForCategory(1, 1);
+//
+//        venues.add(l);
+//        return l;
+//    }
+//
+//    public Event createEvent(String t, Date d, Location l, int age, Time gate, Time start,
+//                             HashMap<String, Integer> discounts) {
+//        Event e = new Event(t, d, l, age, gate, start, discounts);
+//        events.add(e);
+//        return e;
+//    }
+//
+//    public Festival createFestival(String t, Date d, Location l, int age, Time gate, Time start,
+//                                   Date e, HashMap<String, Integer> discounts) {
+//        Festival f = new Festival(t, d, l, age, gate, start, e, discounts);
+//        events.add(f);
+//        return f;
+//    }
+

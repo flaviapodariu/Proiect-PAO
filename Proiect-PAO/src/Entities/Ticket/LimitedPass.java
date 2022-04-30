@@ -23,7 +23,7 @@ public class LimitedPass extends Ticket{
     public void read(Scanner in){
         System.out.println("Number of hours valid: ");
         this.hours = Integer.parseInt(in.nextLine());
-        System.out.println("TIcket valid from (hh:mm): ");
+        System.out.println("Ticket valid from (hh:mm): ");
         this.start = Time.parser(in.nextLine());
     }
 
