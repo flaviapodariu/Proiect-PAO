@@ -1,3 +1,7 @@
+import Entities.Location.*;
+import Entities.Client.Client;
+import Entities.Ticket.*;
+import Entities.Event.*;
 import Services.*;
 
 import java.io.IOException;
@@ -15,6 +19,7 @@ public class Main {
         EventCSVService eventCSV = EventCSVService.getInstance();
         LocationCSVService locationCSV = LocationCSVService.getInstance();
         TicketCSVService ticketCSV = TicketCSVService.getInstance();
+        WriteService out = WriteService.getInstance();
         Scanner in = new Scanner(System.in);
         boolean stop = false;
 
@@ -53,11 +58,13 @@ public class Main {
                     audit.logAction( "add_festival");
                 }
                 case "get_clients" -> {
-                    service.listClients();
+                    List<Client> c = service.getClients();
+                    out.writeToFile("data/output.txt", c);
                     audit.logAction("get_clients");
                 }
                 case "get_locations" -> {
-                    service.listLocations();
+                    List<Location> l = service.getLocations();
+                    out.writeToFile("data/output.txt", l);
                     audit.logAction("get_locations");
                 }
                 case "get_locations_by_desc_capacity" -> {
@@ -65,11 +72,13 @@ public class Main {
                     audit.logAction("get_locations_by_desc_capacity");
                 }
                 case "get_events" -> {
-                    service.listEvents();
+                    List<Event> e = service.getEvents();
+                    out.writeToFile("data/output.txt", e);
                     audit.logAction("get_events");
                 }
                 case "get_tickets" -> {
-                    service.listTicketsSold();
+                    List<Ticket> t = service.getTicketsSold();
+                    out.writeToFile("data/output.txt", t);
                     audit.logAction("get_tickets");
                 }
 

@@ -88,6 +88,10 @@ public class MainService implements IMainService {
         this.events = events;
     }
 
+    public List<Ticket> getTicketsSold(){
+        return this.ticketsSold;
+    }
+
     @Override
     public void listTicketsSold(){
         for(Ticket t: this.ticketsSold){
