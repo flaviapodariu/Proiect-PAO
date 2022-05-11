@@ -37,6 +37,7 @@ public class Main {
             String option = in.nextLine();
 
             switch (option) {
+
                 case "add_client" -> {
                     service.createClient(in);
                     audit.logAction("add_client");
@@ -88,12 +89,33 @@ public class Main {
                 }
 
                 case "get_events_from" -> {
-                    service.listAllEventsStartingFrom(in);
-                    audit.logAction("get_events_from");
+                    boolean ok = false;
+                    while(!ok) {
+                        try {
+                            service.listAllEventsStartingFrom(in);
+                            audit.logAction("get_events_from");
+                            ok = true;
+                        } catch (Exception e) {
+                            String log = "get_events_from ERROR " + e.getMessage();
+                            System.out.println("Please enter a date in dd-mm-yyyy format");
+                            audit.logAction(log);
+                        }
+                    }
+
                 }
                 case "get_events_until" -> {
-                    service.listAllEventsUntil(in);
-                    audit.logAction("get_events_until");
+                    boolean ok = false;
+                    while(!ok) {
+                        try {
+                            service.listAllEventsUntil(in);
+                            audit.logAction("get_events_until");
+                            ok = true;
+                        } catch (Exception e) {
+                            String log = "get_events_until ERROR " + e.getMessage();
+                            System.out.println("Please enter a date in dd-mm-yyyy format");
+                            audit.logAction(log);
+                        }
+                    }
                 }
                 case "sell_full" -> {
                     service.sellAdultFullPassForCategory(in);

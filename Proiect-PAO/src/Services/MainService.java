@@ -259,8 +259,9 @@ public class MainService implements IMainService {
     // QUERIES
     @Override
     public List<Event> getAllEventsStartingFrom(Scanner in){
-        List<Event> eventList = new ArrayList<Event>();
+        List<Event> eventList = new ArrayList<>();
         System.out.println("Enter start date: ");
+
         Date start = Date.parser(in.nextLine());
 
         for(Event e: this.events){
@@ -286,7 +287,7 @@ public class MainService implements IMainService {
     @Override
     public List<Event> getAllEventsUntil(Scanner in) {
         List<Event> eventList = new ArrayList<>();
-        System.out.println("Enter end date: ");
+        System.out.println("Enter last date: ");
         Date end = Date.parser(in.nextLine());
 
         for (Event e : this.events) {

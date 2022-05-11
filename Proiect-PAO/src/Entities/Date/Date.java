@@ -86,6 +86,7 @@ public class Date {
     public String toString() {
         String mo="";
         switch (this.month) {
+            case 0 -> mo = "0";
             case 1 -> mo = "January";
             case 2 -> mo = "February";
             case 3 -> mo = "March";
