@@ -2,6 +2,8 @@ package Services;
 import Entities.Location.*;
 import Entities.Event.*;
 import Entities.Client.*;
+import Entities.Ticket.DayPass;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,7 +23,7 @@ public interface IMainService {
 
     Festival createFestival(Scanner in);
 
-    double sellAdultDayPassForCategory(Scanner in);
+    DayPass sellAdultDayPassForCategory(Scanner in);
 
     double sellDiscountedDayPassForCategory(Scanner in);
 

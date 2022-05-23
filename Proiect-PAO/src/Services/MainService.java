@@ -22,6 +22,8 @@ public class MainService implements IMainService {
         this.clients =  new ArrayList<>();
         this.locations = new ArrayList<>();
         this.events = new ArrayList<>();
+        this.ticketsSold = new ArrayList<>();
+        this.ticketRegistry = new HashMap<>();
     }
 
     public static MainService getInstance() {
@@ -159,28 +161,28 @@ public class MainService implements IMainService {
     }
 
     @Override
-    public double sellAdultDayPassForCategory(Scanner in) {
+    public DayPass sellAdultDayPassForCategory(Scanner in) {
         Event event = this.eventExistsHelper(in);
         Client client = this.clientExistsHelper(in);
         if(event == null || client == null)
-            return 0;
+            return null;
 
         int minAge = event.getMinAge();
         if (!client.validateAge(event.getDate(), minAge)) {
             System.out.println("The client is not old enough!");
-            return 0;
+            return null;
         }
 
-        SectionedLocation venue = (SectionedLocation)event.getVenue();
+        Location venue = event.getVenue();
         System.out.println("Enter the wanted category:");
         int category = Integer.parseInt(in.nextLine());
-        if(venue.isAvailable(category, 1)){
-            Ticket pass = new DayPass(in, category, event, false);
+        if(venue.isAvailable(category)){
+            DayPass pass = new DayPass(in, category, event, client, false);
             client.addTicket(pass);
             this.mapTicketToClient(pass, client);
-            return pass.getFullPrice();
+            return pass;
         }
-        return 0;
+        return null;
 
     }
 
@@ -207,7 +209,7 @@ public class MainService implements IMainService {
         System.out.println("Enter the wanted category:");
         int category = Integer.parseInt(in.nextLine());
         if(venue.isAvailable(category, 1)){
-            Ticket pass = new DayPass(in, category, event, true);
+            Ticket pass = new DayPass(in, category, event, client, true);
             client.addTicket(pass);
             this.mapTicketToClient(pass, client);
             return pass.getPriceWithDiscount(event.getDiscount(cat));
@@ -233,7 +235,7 @@ public class MainService implements IMainService {
         System.out.println("Enter the wanted category:");
         int category = Integer.parseInt(in.nextLine());
         if(venue.isAvailable(category, 1)){
-            Ticket pass = new FullPass(in, category, event, false);
+            Ticket pass = new FullPass(in, category, event, client, false);
             client.addTicket(pass);
             this.mapTicketToClient(pass, client);
             return pass.getFullPrice();
@@ -274,7 +276,23 @@ public class MainService implements IMainService {
         }
     }
 
-//    public void update_dayPass
+    public void updateClientFirstName(String name, int cl_id){
+        for(Client c: this.clients){
+            if(c.getID() == cl_id){
+                c.setFirstName(name);
+                return;
+            }
+        }
+    }
+
+    public void update_dayPass_validity(Date valid, int id){
+        for(Ticket t: this.ticketsSold){
+            if(t.getUniqueID() == id){
+                DayPass dp = (DayPass) t;
+                dp.setValidity(valid);
+            }
+        }
+    }
 
 //    DELETE
     public void deleteEventByName(String name){
@@ -284,12 +302,24 @@ public class MainService implements IMainService {
     public void deleteLocationByID(int loc_id){
         this.locations.removeIf(l -> Objects.equals(l.getID(), loc_id));
     }
+    public void deleteClientByID(int cl_id){
+        this.clients.removeIf(c -> Objects.equals(c.getID(), cl_id));
+    }
 
-    public void deletePassByEventId(int event_id){
+    public void deleteTicketHelper(int ticket_id, int client_id){
+        Client c = this.getClientByID(client_id);
+        List<Ticket> t_lst = c.getTickets();
+        t_lst.removeIf(t -> t.getUniqueID() == ticket_id);
+        c.setTickets(t_lst);
+    }
+    public void deletePassById(int ticket_id){
         for(Ticket t: this.ticketsSold){
-            if(t.getEvent().getID() == event_id){
-                client
-
+            if(t.getUniqueID() == ticket_id){
+                int client_id = t.getClient().getID();
+                this.ticketRegistry.remove(client_id, ticket_id);
+                this.deleteTicketHelper(ticket_id, client_id);
+                this.ticketsSold.remove(t);
+                return;
             }
         }
 

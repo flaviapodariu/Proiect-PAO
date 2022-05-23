@@ -1,4 +1,5 @@
 package Entities.Ticket;
+import Entities.Client.Client;
 import Entities.Date.*;
 import Entities.Event.*;
 import java.util.Scanner;
@@ -6,18 +7,19 @@ import java.util.Scanner;
 public class DayPass extends Ticket{
     private Date validity;
 
-    public DayPass(Event event, double price, int cat, boolean discount, Date validity){
-        super(event, price, cat, discount);
+    public DayPass(Event event, Client client, double price, int cat, boolean discount, Date validity){
+        super(event, client, price, cat, discount);
+        this.validity = this.getEvent().getDate();
     }
 
-    public DayPass(Scanner in, int category, Event event, boolean discount){
-        super(in, category, event, discount);
-        this.read(in);
+    public DayPass(int id, Event event, Client client, double price, int cat, Date validity){
+        super(id, event, client, price, cat);
+        this.validity = this.getEvent().getDate();
     }
 
-    public void read(Scanner in){
-        System.out.println("Enter the date on which the ticket is valid(d-m-yyyy): ");
-        this.validity = Date.parser(in.nextLine());
+    public DayPass(Scanner in, int category, Event event, Client client, boolean discount){
+        super(in, category, event, client, discount);
+        this.validity = this.getEvent().getDate();
     }
 
     public Date getValidity() {

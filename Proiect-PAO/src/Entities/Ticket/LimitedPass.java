@@ -1,5 +1,6 @@
 package Entities.Ticket;
 
+import Entities.Client.Client;
 import Entities.Date.*;
 import Entities.Event.*;
 
@@ -10,13 +11,18 @@ public class LimitedPass extends Ticket{
     private int hours;
     private Time start;
 
-    public LimitedPass(Event event, double price, int cat, boolean discount, int h, Time start){
-        super(event, price, cat, discount);
+    public LimitedPass(Event event, Client client, double price, int cat, boolean discount, int h, Time start){
+        super(event, client, price, cat, discount);
         this.hours = h;
         this.start = start;
     }
-    public LimitedPass(Scanner in, int category, Event event, boolean discount){
-        super(in, category, event, discount);
+    public LimitedPass(int id, Event event, Client client, double price, int cat, int h, Time start){
+        super(id, event, client, price, cat);
+        this.hours = h;
+        this.start = start;
+    }
+    public LimitedPass(Scanner in, int category, Event event, Client client, boolean discount){
+        super(in, category, event, client, discount);
         this.read(in);
     }
 

@@ -2,19 +2,15 @@ package Services;
 
 import Entities.Date.Date;
 import Entities.Date.Time;
-import Entities.Event.Event;
 import Entities.Ticket.DayPass;
 import Entities.Ticket.FullPass;
 import Entities.Ticket.LimitedPass;
 import Entities.Ticket.Ticket;
-import com.sun.tools.javac.Main;
 
-import javax.management.openmbean.TabularData;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class TicketCSVService {
@@ -50,30 +46,37 @@ public class TicketCSVService {
     }
 
     public Ticket fullPass(String[] tData){
+        MainService ms = MainService.getInstance();
         return new FullPass(
-                MainService.getInstance().getEventByID(Integer.parseInt(tData[0])),
-                Double.parseDouble(tData[1]),
-                Boolean.parseBoolean(tData[2]),
-                Integer.parseInt(tData[3]));
+                ms.getEventByID(Integer.parseInt(tData[0])),
+                ms.getClientByID(Integer.parseInt(tData[1])),
+                Double.parseDouble(tData[2]),
+                Boolean.parseBoolean(tData[3]),
+                Integer.parseInt(tData[4]));
     }
 
     public Ticket dayPass(String[] tData){
+        MainService ms = MainService.getInstance();
         return new DayPass(
-                MainService.getInstance().getEventByID(Integer.parseInt(tData[0])),
-                Double.parseDouble(tData[1]),
-                Integer.parseInt(tData[2]),
-                Boolean.parseBoolean(tData[3]),
-                Date.parser(tData[4]));
+                ms.getEventByID(Integer.parseInt(tData[0])),
+                ms.getClientByID(Integer.parseInt(tData[1])),
+                Double.parseDouble(tData[2]),
+                Integer.parseInt(tData[3]),
+                Boolean.parseBoolean(tData[4]),
+                Date.parser(tData[5]));
     }
 
     public Ticket limitedPass(String[] tData){
+        MainService ms = MainService.getInstance();
         return new LimitedPass(
-                MainService.getInstance().getEventByID(Integer.parseInt(tData[0])),
-                Double.parseDouble(tData[1]),
-                Integer.parseInt(tData[2]),
-                Boolean.parseBoolean(tData[3]),
-                Integer.parseInt(tData[4]),
-                Time.parser(tData[5]));
+
+                ms.getEventByID(Integer.parseInt(tData[0])),
+                ms.getClientByID(Integer.parseInt(tData[1])),
+                Double.parseDouble(tData[2]),
+                Integer.parseInt(tData[3]),
+                Boolean.parseBoolean(tData[4]),
+                Integer.parseInt(tData[5]),
+                Time.parser(tData[6]));
     }
 
 }

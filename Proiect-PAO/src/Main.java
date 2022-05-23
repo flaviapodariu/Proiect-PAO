@@ -3,6 +3,7 @@ import Entities.Client.Client;
 import Entities.Ticket.*;
 import Entities.Event.*;
 import Queries.ClientQueries;
+import Queries.DayPassQueries;
 import Queries.EventQueries;
 import Queries.LocationQueries;
 import Services.*;
@@ -150,10 +151,13 @@ public class Main {
         ClientQueries clientQ = new ClientQueries(conn, service);
         LocationQueries locQ = new LocationQueries(conn, service);
         EventQueries evQ = new EventQueries(conn, service);
+        DayPassQueries passQ = new DayPassQueries(conn, service);
 
+//        LOADING DB
         clientQ.get();
         locQ.get();
         evQ.get();
+        passQ.get();
 
 
         while (!stop) {
@@ -186,34 +190,33 @@ public class Main {
                     audit.logAction("add_festival");
                 }
                 case "get_clients" -> {
-                    List<Client> c = service.getClients();
                     clientQ.get();
                     service.listClients();
                     audit.logAction("get_clients");
                 }
                 case "get_locations" -> {
-                    List<Location> l = service.getLocations();
                     locQ.get();
                     service.listLocations();
                     audit.logAction("get_locations");
                 }
                 case "get_locations_by_desc_capacity" -> {
+                    locQ.get();
                     service.listLocationsByDescCapacity();
                     audit.logAction("get_locations_by_desc_capacity");
                 }
                 case "get_events" -> {
-                    List<Event> e = service.getEvents();
                     evQ.get();
                     service.listEvents();
                     audit.logAction("get_events");
                 }
                 case "get_tickets" -> {
-                    List<Ticket> t = service.getTicketsSold();
-                    out.writeToFile("data/output.txt", t);
+                    passQ.get();
+                    service.listTicketsSold();
                     audit.logAction("get_tickets");
                 }
 
                 case "get_tickets_of_clientID" -> {
+                    clientQ.get();
                     service.listClientTickets(in);
                     audit.logAction("get_tickets_of_clientID");
                 }
@@ -223,8 +226,24 @@ public class Main {
                     String name = in.nextLine();
                     evQ.delete(name);
                 }
+                case "delete_client_by_id" ->{
+                    System.out.println("Enter client ID to delete:");
+                    int id = in.nextInt();
+                    clientQ.delete(id);
+                }
+                case "delete_location_by_id" ->{
+                    System.out.println("Enter location ID to delete:");
+                    int id = in.nextInt();
+                    locQ.delete(id);
+                }
+                case "delete_daypass_by_id" ->{
+                    System.out.println("Enter ticket ID to delete:");
+                    int id = in.nextInt();
+                    passQ.delete(id);
+                }
 
                 case "get_events_from" -> {
+                    evQ.get();
                     boolean ok = false;
                     while (!ok) {
                         try {
@@ -240,6 +259,7 @@ public class Main {
 
                 }
                 case "get_events_until" -> {
+                    evQ.get();
                     boolean ok = false;
                     while (!ok) {
                         try {
@@ -253,18 +273,19 @@ public class Main {
                         }
                     }
                 }
-                case "sell_full" -> {
-                    service.sellAdultFullPassForCategory(in);
-                    audit.logAction("sell_full");
-                }
+//                case "sell_full" -> {
+//                    service.sellAdultFullPassForCategory(in);
+//                    audit.logAction("sell_full");
+//                }
                 case "sell_day" -> {
-                    service.sellAdultDayPassForCategory(in);
+                    DayPass t = service.sellAdultDayPassForCategory(in);
+                    passQ.insert(t);
                     audit.logAction("sell_day");
                 }
-                case "sell_day_discount" -> {
-                    service.sellDiscountedDayPassForCategory(in);
-                    audit.logAction("sell_day_discount");
-                }
+//                case "sell_day_discount" -> {
+//                    service.sellDiscountedDayPassForCategory(in);
+//                    audit.logAction("sell_day_discount");
+//                }
                 case "-help" -> listCommands();
                 case "end" -> stop = true;
                 default -> System.out.println("Wrong command! Use -help for a list of full commands.");
@@ -285,6 +306,10 @@ public class Main {
         commands.add("get_events");
         commands.add("get_tickets");
         commands.add("get_tickets_of_clientID");
+        commands.add("delete_event_with_name");
+        commands.add("delete_client_by_id");
+        commands.add("delete_location_by_id");
+        commands.add("delete_daypass_by_id");
         commands.add("get_events_from");
         commands.add("get_events_until");
         commands.add("sell_full");

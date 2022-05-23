@@ -5,10 +5,7 @@ import Entities.Date.Date;
 import Services.MainService;
 import com.sun.tools.javac.Main;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +46,28 @@ public class ClientQueries {
             cl_lst.add(c);
         }
         this.ms.setClients(cl_lst);
+    }
+
+//    UPDATE
+    public void update(String firstN, int client_id) throws SQLException {
+        String qrySQL = "UPDATE Client " +
+                        "SET firstname=? " +
+                        "WHERE client_id=? ";
+        PreparedStatement ps = this.conn.prepareStatement(qrySQL);
+        ps.setString(1, firstN);
+        ps.setInt(2, client_id);
+        ps.executeUpdate();
+        this.ms.updateClientFirstName(firstN, client_id);
+    }
+
+//    DELETE
+    public void delete(int id) throws SQLException {
+        String qrySQL = "DELETE FROM Client " +
+                "WHERE client_id=?";
+        PreparedStatement ps = this.conn.prepareStatement(qrySQL);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        this.ms.deleteClientByID(id);
     }
 
 

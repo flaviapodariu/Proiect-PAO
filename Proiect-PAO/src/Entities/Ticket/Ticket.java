@@ -1,4 +1,5 @@
 package Entities.Ticket;
+import Entities.Client.Client;
 import Entities.Event.*;
 
 import java.util.Scanner;
@@ -8,6 +9,7 @@ abstract public class Ticket {
 
     private int uniqueID;
     private Event event;
+    private Client client;
     private double fullPrice;
     private int category;
     private boolean discountsApplied;
@@ -16,29 +18,51 @@ abstract public class Ticket {
         this.uniqueID = ticketUID;
         ticketUID += 1;
         this.event = new Event();
+        this.client = new Client();
         this.fullPrice = 0;
         this.category = 1;
         this.discountsApplied = false;
     }
 
-    public Ticket(Event event, double fullPrice, int cat, boolean disc){
+    public Ticket(Event event, Client client, double fullPrice, int cat, boolean disc){
         this.uniqueID = ticketUID;
         ticketUID += 1;
         this.event = event;
+        this.client = client;
         this.fullPrice = fullPrice;
         this.category = cat;
         this.discountsApplied = disc;
     }
-    public Ticket(Scanner in, int category, Event e, boolean disc){
-        this.readBase(in, category, e, disc);
+    public Ticket(int id, Event event, Client client, double fullPrice, int cat){
+        this.uniqueID = id;
+        ticketUID += 1;
+        this.event = event;
+        this.client = client;
+        this.fullPrice = fullPrice;
+        this.category = cat;
+        this.discountsApplied = false;
+    }
+    public Ticket(Scanner in, int category, Event e, Client c, boolean disc){
+        this.readBase(in, category, e, c, disc);
     }
 
-    public void readBase(Scanner in, int category, Event e, boolean discount){
+    public void readBase(Scanner in, int category, Event e, Client c, boolean discount){
+        this.uniqueID = ticketUID;
+        ticketUID += 1;
         this.event = e;
+        this.client = c;
         System.out.println("Full Price:");
         this.fullPrice = Integer.parseInt(in.nextLine());
         this.category = category;
         this.discountsApplied = discount;
+    }
+
+    public int getUniqueID() {
+        return uniqueID;
+    }
+
+    public void setUniqueID(int uniqueID) {
+        this.uniqueID = uniqueID;
     }
 
     public Event getEvent() {
@@ -47,6 +71,14 @@ abstract public class Ticket {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public double getFullPrice() {

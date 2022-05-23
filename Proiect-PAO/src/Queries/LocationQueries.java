@@ -66,7 +66,7 @@ public class LocationQueries {
         PreparedStatement ps = this.conn.prepareStatement(qrySQL);
         ps.setInt(1, loc_id);
         ps.executeUpdate();
-        this.ms.
+        this.ms.deleteLocationByID(loc_id);
 
     }
 }
