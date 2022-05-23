@@ -1,3 +1,4 @@
+import Entities.Date.Date;
 import Entities.Location.*;
 import Entities.Client.Client;
 import Entities.Ticket.*;
@@ -13,7 +14,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 
 public class Main {
@@ -220,6 +223,37 @@ public class Main {
                     service.listClientTickets(in);
                     audit.logAction("get_tickets_of_clientID");
                 }
+                case "update_event_date" ->{
+                    System.out.println("Enter event name:");
+                    String name = in.nextLine();
+                    System.out.println("Enter new event date:(dd-mm-yyyy)");
+                    Date date = Date.parser(in.nextLine());
+                    evQ.update_date(name, date);
+                }
+
+                case "update_location_capacity" -> {
+                    System.out.println("Enter location ID:");
+                    int loc_id = in.nextInt();
+                    System.out.println("Enter new capacity:");
+                    int new_cap = in.nextInt();
+                    locQ.update_capacity(new_cap, loc_id);
+                }
+
+                case "update_client_first_name" ->{
+                    System.out.println("Enter client ID:");
+                    int cl_id = in.nextInt();
+                    System.out.println("Enter new first name for client");
+                    String fName = in.nextLine();
+                    clientQ.update(fName, cl_id);
+                }
+
+                case "update_ticket_validity" ->{
+                    System.out.println("Enter ticket ID");
+                    int id = in.nextInt();
+                    System.out.println("Enter new valid date:(dd-mm-yyyy)");
+                    Date date = Date.parser(in.nextLine());
+                    passQ.update(date, id);
+                }
 
                 case "delete_event_with_name" ->{
                     System.out.println("Enter event title");
@@ -306,6 +340,10 @@ public class Main {
         commands.add("get_events");
         commands.add("get_tickets");
         commands.add("get_tickets_of_clientID");
+        commands.add("update_event_date");
+        commands.add("update_location_capacity");
+        commands.add("update_client_first_name");
+        commands.add("update_ticket_validity");
         commands.add("delete_event_with_name");
         commands.add("delete_client_by_id");
         commands.add("delete_location_by_id");
