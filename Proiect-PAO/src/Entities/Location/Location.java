@@ -19,8 +19,17 @@ public class Location implements Comparable<Location> {
         this.address = address;
         this.capacity = capacity;
     }
+    public Location(int id, String name, String city, String address, int capacity){
+        this.locationID = id;
+        locUID += 1;
+        this.name = name;
+        this.city = city;
+        this.address = address;
+        this.capacity = capacity;
+    }
     public Location(Scanner in){
         this.readBase(in);
+        this.locationID = locUID;
         locUID += 1;
     }
 

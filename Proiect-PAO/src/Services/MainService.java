@@ -256,6 +256,45 @@ public class MainService implements IMainService {
 
     }
 
+//    UPDATE
+    public void updateEventDateByName(String name, Date date){
+        for(Event e: this.events){
+            if(e.getTitle().equals(name)){
+                e.setDate(date);
+                return;
+            }
+        }
+    }
+    public void updateLocationCapacity(int new_capacity, int loc_id){
+        for(Location l: this.locations){
+            if(l.getID() == loc_id){
+                l.setCapacity(new_capacity);
+                return;
+            }
+        }
+    }
+
+//    public void update_dayPass
+
+//    DELETE
+    public void deleteEventByName(String name){
+        this.events.removeIf(ev -> Objects.equals(ev.getTitle(), name));
+    }
+
+    public void deleteLocationByID(int loc_id){
+        this.locations.removeIf(l -> Objects.equals(l.getID(), loc_id));
+    }
+
+    public void deletePassByEventId(int event_id){
+        for(Ticket t: this.ticketsSold){
+            if(t.getEvent().getID() == event_id){
+                client
+
+            }
+        }
+
+    }
+
     // QUERIES
     @Override
     public List<Event> getAllEventsStartingFrom(Scanner in){

@@ -33,6 +33,17 @@ public class Event {
         this.startingTime = start;
         this.discounts = discounts;
     }
+    public Event(int id, String t, Date d, Location l, int age, Time gate, Time start) {
+        this.uniqueID = id;
+        eventUID += 1;
+        this.title = t;
+        this.date = d;
+        this.venue = l;
+        this.minAge = age;
+        this.gateTime = gate;
+        this.startingTime = start;
+        this.discounts = new HashMap<>();
+    }
 
     public Event(Scanner in, Location l){
         this.readEvent(in, l);

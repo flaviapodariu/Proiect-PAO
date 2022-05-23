@@ -84,22 +84,6 @@ public class Date {
 
     @Override
     public String toString() {
-        String mo="";
-        switch (this.month) {
-            case 0 -> mo = "0";
-            case 1 -> mo = "January";
-            case 2 -> mo = "February";
-            case 3 -> mo = "March";
-            case 4 -> mo = "April";
-            case 5 -> mo = "May";
-            case 6 -> mo = "June";
-            case 7 -> mo = "July";
-            case 8 -> mo = "August";
-            case 9 -> mo = "September";
-            case 10 -> mo = "October";
-            case 11 -> mo = "November";
-            case 12 -> mo = "December";
-        }
-        return this.day + "-" + mo + "-" + this.year;
+        return this.day + "-" + this.month + "-" + this.year;
     }
 }

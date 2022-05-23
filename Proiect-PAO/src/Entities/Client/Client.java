@@ -27,6 +27,14 @@ public class Client {
         this.DOB = dob;
         this.tickets = new ArrayList<>();
     }
+    public Client(int id, String first, String last, Date dob){
+        this.uniqueID = id;
+        clientUID += 1;
+        this.firstName = first;
+        this.lastName = last;
+        this.DOB = dob;
+        this.tickets = new ArrayList<>();
+    }
     public Client(Scanner in){
         this.read(in);
         this.uniqueID = clientUID;
